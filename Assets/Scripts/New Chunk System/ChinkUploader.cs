@@ -6,8 +6,9 @@ public class ChinkUploader : MonoBehaviour
 {
     [SerializeField] private GameObject ChunkPrefab;
 
-    [SerializeField]private int ChunksRadius = 4;
+    [SerializeField][Range(3, 30)] private int ChunksRadius = 4;
     private float ChunksSize = 50;
+    private float ChuksRadiusLast;
 
     private Dictionary<Vector2, ChankModul> Chunks = new Dictionary<Vector2, ChankModul>();
 
@@ -22,18 +23,20 @@ public class ChinkUploader : MonoBehaviour
         {
             Chunks.Add(new Vector2(item.gameObject.transform.position.x / 50, item.gameObject.transform.position.z / 50), item);
         }
+        ChuksRadiusLast = ChunksRadius;
     }
 
     // Update is called once per frame
     void Update()
     {
         PlayerPosNow = new Vector2(Mathf.RoundToInt(this.gameObject.transform.position.x / ChunksSize), Mathf.RoundToInt(this.gameObject.transform.position.z / ChunksSize));
-        if(PlayerPosNow != PlayerPosLast)
+        if(PlayerPosNow != PlayerPosLast || ChuksRadiusLast != ChunksRadius)
         {
+            ChuksRadiusLast = ChunksRadius;
             PlayerPosLast = PlayerPosNow;
             ChangeChunks();
-
         }
+
 
         foreach(Vector2 item in Chunks.Keys)
         {
