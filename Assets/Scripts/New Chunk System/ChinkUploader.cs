@@ -41,12 +41,37 @@ public class ChinkUploader : MonoBehaviour
         }
     }
 
-    void ChangeChunks()
+    async void ChangeChunks()
+    {
+        StartCoroutine(DestroyOldChunk());
+
+        if (Chunks.Count < ChunkCurrentCount())
+        for(int i = -ChunksRadius; i  < ChunksRadius + 1; i++)
+        {
+                StartCoroutine(CreateLineChunk(i));
+        }
+    }
+
+    IEnumerator CreateLineChunk(int line)
+    {
+        for (int j = -ChunksRadius; j < ChunksRadius + 1; j++)
+        {
+            if (!Chunks.ContainsKey(new Vector2(line + PlayerPosNow.x, j + PlayerPosNow.y)))
+            {
+                Chunks.Add(new Vector2(line + PlayerPosNow.x, j + PlayerPosNow.y), Instantiate(ChunkPrefab, GetChunkPos(line, j), Quaternion.identity).GetComponent<ChankModul>());
+            }
+        }
+
+        yield return null;
+    }
+
+
+    IEnumerator DestroyOldChunk()
     {
         List<Vector2> remove = new List<Vector2>();
         foreach (Vector2 item in Chunks.Keys)
         {
-            if (Mathf.Abs((item - PlayerPosNow).x) > ChunksRadius  || Mathf.Abs((item - PlayerPosNow).y) > ChunksRadius )
+            if (Mathf.Abs((item - PlayerPosNow).x) > ChunksRadius || Mathf.Abs((item - PlayerPosNow).y) > ChunksRadius)
             {
                 Destroy(Chunks[item].gameObject);
                 remove.Add(item);
@@ -58,17 +83,7 @@ public class ChinkUploader : MonoBehaviour
             Chunks.Remove(item);
         }
 
-        if (Chunks.Count < ChunkCurrentCount())
-        for(int i = -ChunksRadius; i  < ChunksRadius + 1; i++)
-        {
-            for (int j = -ChunksRadius; j < ChunksRadius + 1; j++)
-            {
-                    if (!Chunks.ContainsKey(new Vector2(i + PlayerPosNow.x, j + PlayerPosNow.y)))
-                    {
-                        Chunks.Add(new Vector2(i + PlayerPosNow.x, j + PlayerPosNow.y), Instantiate(ChunkPrefab, GetChunkPos(i, j), Quaternion.identity).GetComponent<ChankModul>());
-                    }
-            }
-        }
+        yield return null;
     }
 
     Vector3 GetChunkPos(Vector2 chunkVec2Pos)
