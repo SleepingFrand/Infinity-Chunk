@@ -4,23 +4,13 @@ using UnityEngine;
 
 public class ChankModul : MonoBehaviour
 {
-    private float Distance = 999;
-    private ChankBuilder ChankBuilderPlayer;
-    private Transform ChankBuilderPlayerTransform;
-    private float RefineRadius = 0.5f;
 
-    private void Start()
+    private void OnTriggerExit(Collider other)
     {
-        ChankBuilderPlayer = Transform.FindObjectOfType<ChankBuilder>();
-        ChankBuilderPlayerTransform = ChankBuilderPlayer.gameObject.transform;
-    }
-    private void Update()
-    {
-        Distance = ChankBuilderPlayer.ChunkDraw * ChankBuilderPlayer.ChunkSize + (ChankBuilderPlayer.ChunkSize * RefineRadius);
-        if (Vector3.Distance(ChankBuilderPlayerTransform.position, this.gameObject.transform.position) > Distance)
-            Destroy(this.gameObject);
+        if (other.gameObject.TryGetComponent(out ChankBuilder chankBuilder))
+        {
+            chankBuilder.Update_Player_Position();
+        }
     }
 
-
-   
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8050856301887766358}
   - component: {fileID: 8050856301887766359}
   - component: {fileID: 5776965598258850836}
+  - component: {fileID: 6019432606205944855}
   m_Layer: 0
   m_Name: Chank
   m_TagString: Untagged
@@ -118,7 +119,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d1350ba4bc21843bf9d33da709d5aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RefineRadius: 0
+--- !u!65 &6019432606205944855
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8050856301887766356}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 5, z: 0}
 --- !u!1001 &1118599802154808444
 PrefabInstance:
   m_ObjectHideFlags: 0
